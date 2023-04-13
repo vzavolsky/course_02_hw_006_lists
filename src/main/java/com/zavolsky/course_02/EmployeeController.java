@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController {
     private EmployeeService employeeService = new EmployeeService();
 
-    public EmployeeController(EmployeeController employeeController) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
