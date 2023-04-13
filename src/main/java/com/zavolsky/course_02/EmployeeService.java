@@ -21,7 +21,7 @@ public class EmployeeService {
         } else {
             this.employeeList.add(employee);
         }
-        return String.format("Employee %s %s was added.", name, familyName);
+        return employee.toJSON();
     }
 
     private boolean checkDuplicates(Employee employee) {
@@ -33,8 +33,11 @@ public class EmployeeService {
         return false;
     }
 
-    public String show(String param) {
-        switch (param) {
+    public String show(String format) {
+        if (format == null) {
+            format = "";
+        }
+        switch (format) {
             case "json":
                 return toJSON();
             default:
@@ -50,48 +53,26 @@ public class EmployeeService {
         return "[" + res + "]";
     }
 
-    public String remove(int id) {
+    public String remove(String name, String familyName) {
         for (Employee employee : employeeList) {
-            if (employee.getEmployeeID() == id) {
+            if (employee.getName().equals(name) && employee.getFamilyName().equals(familyName)) {
                 employeeList.remove(employee);
-                return String.format("%s %s with ID:%d was deleted", employee.getName(), employee.getFamilyName(), employee.getEmployeeID());
+                return employee.toJSON();
             }
         }
-        return String.format("Employee with ID:%d wasn't founded.", id);
+        return noResults();
     }
 
     private String noResults() {
         return "Nothing was founded.";
     }
 
-    public String searchById(int id) {
-        for (Employee employee: employeeList) {
-            if (employee.getEmployeeID() == id) {
-                return employee.toString();
+    public String find(String name, String familyName) {
+        for (Employee employee : employeeList) {
+            if (employee.getName().equals(name) && employee.getFamilyName().equals(familyName)) {
+                return employee.toJSON();
             }
         }
         return noResults();
     }
-
-    /*public String searchByName(String name) {
-        String res = "Was founded employees with name \"" + name + "\":";
-        boolean founded = false;
-        for (Employee employee: employeeList) {
-            if (employee.getName().equals(name)) {
-                res += "\n" + employee.toString();
-            }
-        }
-        if (founded) {
-            return res;
-        }
-        return noResults();
-    }
-
-    public String searchByFName(String familyName) {
-        return "";
-    }
-
-    public String searchByEmployee(String name, String familyName) {
-        return "";
-    }*/
 }

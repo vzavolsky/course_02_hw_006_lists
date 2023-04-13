@@ -1,9 +1,7 @@
 package com.zavolsky.course_02;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.websocket.server.PathParam;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/employee")
@@ -24,27 +22,19 @@ public class EmployeeController {
         return employeeService.add(name,familyName);
     }
 
-    @GetMapping(path = "/show")
-    public String show(@RequestParam("param") String param) {
-        return employeeService.show(param);
+    @GetMapping("/show")
+    public String show(@RequestParam(required = false) String format) {
+        return employeeService.show(format);
     }
 
     @GetMapping(path = "/remove")
-    public String remove(@RequestParam("id") int id) {
-        return employeeService.remove(id);
+    public String remove(@RequestParam("name") String name,@RequestParam("familyName") String familyName) {
+        return employeeService.remove(name,familyName);
     }
 
-    @GetMapping(path = "/search")
-    public String searchById(@RequestParam("id") int id) {
-        return employeeService.searchById(id);
+    @GetMapping(path = "/find")
+    public String find(@RequestParam("name") String name,@RequestParam("familyName") String familyName) {
+        return employeeService.find( name, familyName);
     }
-    /*public String searchByName(@RequestParam("name") String name) {
-        return employeeService.searchByName(name);
-    }
-    public String searchByFName(@RequestParam("familyName") String familyName) {
-        return employeeService.searchByFName(familyName);
-    }
-    public String searchByEmployee(@RequestParam("name") String name,@RequestParam("familyName") String familyName) {
-        return employeeService.searchByEmployee(name,familyName);
-    }*/
+
 }
