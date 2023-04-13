@@ -8,7 +8,7 @@ public class Employee {
     private String name;
     private String familyName;
 
-    Employee() {
+    Employee(String name, String familyName) {
         this.employeeID = employeeID;
         this.name = name;
         this.familyName = familyName;
@@ -36,23 +36,25 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee {" +
+        return "{" +
                 "employeeID = " + employeeID +
                 ", name = '" + name + '\'' +
                 ", familyName = '" + familyName + '\'' +
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return employeeID == employee.employeeID && Objects.equals(name, employee.name) && Objects.equals(familyName, employee.familyName);
+    public String toJSON() {
+        return "{" +
+                "\"id\":" + employeeID +
+                ", \"name\":\"" + name + "\"" +
+                ", \"fname\":\"" + familyName + "\"" +
+                '}';
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(employeeID, name, familyName);
+    public boolean equals(Employee employee) {
+        if (this.getName().equals(employee.getName()) && this.getFamilyName().equals(employee.getFamilyName())) {
+            return true;
+        }
+        return false;
     }
 }
